@@ -1,0 +1,77 @@
+{% extends "membres/base.html" %}
+{% block title %}Médias{% endblock %}
+{% block content %}
+    <main class="h-75 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h1>Médias</h1>
+
+        <div class="d-flex justify-content-between w-100">
+            <form method="get">
+                <label for="disponible">Filtrer par disponibilité :</label>
+                <select name="disponible" id="disponible">
+                    <option value="">Tous</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="non_disponible">Non disponible</option>
+                </select>
+
+                <label for="type" class="ms-5">Filtrer par type :</label>
+                <select name="type" id="type">
+                    <option value="">Tous</option>
+                    <option value="Livre">Livre</option>
+                    <option value="CD">CD</option>
+                    <option value="DVD">DVD</option>
+                    <option value="Jeu">Jeu</option>
+                </select>
+
+                <button type="submit" class="ms-3 btn btn-dark">Filtrer</button>
+            </form>
+
+            <form method="get">
+                <label for="q">Rechercher :</label>
+                <input type="text" name="q" id="q" value="{{ request.GET.q }}" placeholder="Titre ou auteur">
+                <button type="submit" name="recherche" class="ms-3 btn btn-dark">Rechercher</button>
+            </form>
+        </div>
+
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Titre</th>
+                    <th>Auteur</th>
+                    <th>Disponibilité</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for media in medias %}
+                <tr>
+                    <td>{{ media.type }}</td>
+                    <td>
+                        {% if media.titre %}
+                            {{ media.titre }}
+                        {% elif media.nom %}
+                            {{ media.nom }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if media.auteur %} {{ media.auteur }}
+                        {% elif media.realisateur %} {{ media.realisateur }}
+                        {% elif media.artiste %} {{ media.artiste }}
+                        {% elif media.createur %} {{ media.createur }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if media.type == 'Jeu' %}
+                            Non empruntable
+                        {% elif media.disponible == True %}
+                            Disponible
+                        {% elif media.disponible == False %}
+                            Emprunté
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}
