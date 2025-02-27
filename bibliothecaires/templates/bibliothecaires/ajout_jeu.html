@@ -1,0 +1,18 @@
+{% extends "bibliothecaires/base.html" %}
+{% block title %}Ajouter un Jeu{% endblock %}
+{% block content %}
+    <main class="h-75 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h2 class="mb-3">Ajouter un Jeu</h2>
+
+        <form method="post" class="d-flex flex-column">
+            {% csrf_token %}
+            <label for="nom">Nom :</label>
+            <input type="text" name="nom" required>
+
+            <label for="createur">Créateur :</label>
+            <input type="text" name="createur" required>
+
+            <button type="submit" class="btn btn-dark mt-3">Ajouter</button>
+        </form>
+    </main>
+{% endblock %}

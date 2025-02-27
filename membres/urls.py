@@ -1,8 +1,7 @@
 from django.urls import path
-from membres.views import MediasViews
-from .views import MembresAccueilView
+from . import views
 
 urlpatterns = [
-    path('accueil/', MembresAccueilView.as_view(), name='accueil_membres'),
-    path('medias/', MediasViews.as_view(), name='medias_membres'),
+    path('accueil/', views.MembresAccueilView.as_view(), name='accueil_membres'),
+    path('medias/', views.MediasViews.as_view(), name='medias_membres'),
 ]

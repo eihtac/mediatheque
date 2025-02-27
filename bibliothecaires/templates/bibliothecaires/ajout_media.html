@@ -1,0 +1,18 @@
+{% extends "bibliothecaires/base.html" %}
+{% block title %}Ajouter un Média{% endblock %}
+{% block content %}
+    <main class="h-75 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h2 class="mb-3">Ajouter un Média</h2>
+        <form method="get" action="{% url 'ajout_media' %}">
+            <label for="type_media">Type de média :</label>
+            <select id="type_media" name="type_media" class="form-select mb-3">
+                <option value="">Sélectionner un type</option>
+                <option value="livre">Livre</option>
+                <option value="dvd">DVD</option>
+                <option value="cd">CD</option>
+                <option value="jeu">Jeu</option>
+            </select>
+            <button type="submit" class="btn btn-dark">Sélectionner</button>
+        </form>
+    </main>
+{% endblock %}

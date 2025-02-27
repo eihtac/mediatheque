@@ -1,0 +1,36 @@
+{% extends "bibliothecaires/base.html" %}
+{% block title %}Modifier un Média{% endblock %}
+{% block content %}
+    <main class="h-75 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h2 class="mb-3">Modifier un média</h2>
+        <form method="post" class="d-flex flex-column">
+            {% csrf_token %}
+
+            {% if type == "jeu" %}
+                <label for="nom">Nom :</label>
+                <input type="text" name="nom" id="nom" value="{{ media.nom }}" required>
+            {% else %}
+                <label for="titre">Titre :</label>
+                <input type="text" name="titre" id="titre" value="{{ media.titre }}" required>
+            {% endif %}
+
+            {% if media.auteur %}
+                <label for="auteur">Auteur :</label>
+                <input type="text" name="auteur" id="auteur" value="{{ media.auteur }}" required>
+            {% elif media.realisateur %}
+                <label for="realisateur">Réalisateur :</label>
+                <input type="text" name="realisateur" id="realisateur" value="{{ media.realisateur }}" required>
+            {% elif media.artiste %}
+                <label for="artiste">Artiste :</label>
+                <input type="text" name="artiste" id="artiste" value="{{ media.artiste }}" required>
+            {% elif media.createur %}
+                <label for="createur">Créateur :</label>
+                <input type="text" name="createur" id="createur" value="{{ media.createur }}" required>
+            {% endif %}
+
+            <button type="submit" class="btn btn-dark mt-3">Modifier</button>
+        </form>
+
+        <a href="{% url 'medias_bibliothecaires' %}" class="btn btn-dark mt-3 px-5">Annuler</a>
+    </main>
+{% endblock %}
