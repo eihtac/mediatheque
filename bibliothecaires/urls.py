@@ -10,5 +10,8 @@ urlpatterns = [
     path('medias/ajout/cd/', views.AjoutCDView.as_view(), name='ajout_cd'),
     path('medias/ajout/jeu/', views.AjoutJeuView.as_view(), name='ajout_jeu'),
     path('medias/modification/<str:type>/<int:id>/', views.ModificationMediaView.as_view(), name='modification_media'),
-    path('medias/suppression/<str:type>/<int:id>/', views.SuppressionMediaView.as_view(), name='suppression_media')
+    path('medias/suppression/<str:type>/<int:id>/', views.SuppressionMediaView.as_view(), name='suppression_media'),
+    path('emprunts/', views.EmpruntsView.as_view(), name='emprunts'),
+    path('emprunts/ajout/', views.AjoutEmpruntView.as_view(), name='ajout_emprunt'),
+    path('emprunts/retour/<int:id>/', views.RetourEmpruntView.as_view(), name='retour_emprunt')
 ]
