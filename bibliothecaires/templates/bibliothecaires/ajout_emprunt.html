@@ -1,0 +1,28 @@
+{% extends "bibliothecaires/base.html" %}
+{% block title %}Ajouter un emprunt{% endblock %}
+{% block content %}
+    <main class="h-75 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h2 class="mb-3">Ajouter un emprunt</h2>
+
+        <form method="post" class="d-flex flex-column">
+            {% csrf_token %}
+            <label for="membre">Sélectionner un membre :</label>
+            <select name="membre" id="membre" required>
+                <option value="">Sélectionner un membre</option>
+                {% for membre in membres_autorises %}
+                <option value="{{ membre.id }}">{{ membre.nom }}</option>
+                {% endfor %}
+            </select>
+
+            <label for="media">Sélectionner un média :</label>
+            <select name="media" id="media" required>
+                <option value="">Sélectionner un média</option>
+                {% for media in medias_disponibles %}
+                <option value="{{ media.id }}">{{ media.titre }}</option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="btn btn-dark mt-3">Ajouter</button>
+        </form>
+    </main>
+{% endblock %}

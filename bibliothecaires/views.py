@@ -4,7 +4,8 @@ from django.views.generic import TemplateView
 from django.db.models import Q
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
-from .models import Livre, DVD, CD, JeuDePlateau
+from django.utils.timezone import now
+from .models import Livre, DVD, CD, JeuDePlateau, Emprunt, Membre, Media
 
 
 class BibliothecairesAccueilView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
@@ -213,3 +214,75 @@ class SuppressionMediaView(LoginRequiredMixin, UserPassesTestMixin, TemplateView
 
         media.delete()
         return redirect(reverse_lazy('medias_bibliothecaires'))
+
+
+class EmpruntsView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'bibliothecaires/emprunts.html'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='bibliothecaires').exists()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        emprunts = Emprunt.objects.select_related('emprunteur', 'media').all()
+        recherche = self.request.GET.get('q','').strip().lower()
+        filtre_retard = self.request.GET.get('retard')
+
+        if filtre_retard == 'en_retard':
+            emprunts = emprunts.filter(date_retour__lt=now().date())
+
+        if recherche:
+            emprunts = emprunts.filter(
+                Q(media__titre__icontains=recherche) |
+                Q(emprunteur__nom__icontains=recherche)
+            )
+
+        context['emprunts'] = emprunts
+        context['aujourdhui'] = now().date()
+        return context
+
+
+class AjoutEmpruntView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'bibliothecaires/ajout_emprunt.html'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='bibliothecaires').exists()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['medias_disponibles'] = Media.objects.filter(disponible=True)
+        context['membres_autorises'] = Membre.objects.filter(en_retard=False, emprunts_actifs__lt=3)
+        return context
+
+    def post(self, request, *args, **kwargs):
+        membre_id = request.POST.get('membre')
+        media_id = request.POST.get('media')
+
+        membre = get_object_or_404(Membre, id=membre_id)
+        media = get_object_or_404(Media, id=media_id)
+
+        if membre.peut_emprunter() and media.disponible:
+            Emprunt.objects.create(emprunteur=membre, media=media)
+            return redirect(reverse_lazy('emprunts'))
+        else:
+            return render(request, self.template_name, {
+                'error': "Impossible de créer l'emprunt. Vérifiez les conditions.",
+                'medias_disponibles': Media.objects.filter(disponible=True),
+                'membres_autorises': Membre.objects.filter(en_retard=False, emprunts_actifs__lt=3)
+            })
+
+
+class RetourEmpruntView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'bibliothecaires/retour_emprunt.html'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='bibliothecaires').exists()
+
+    def get(self, request, id, *args, **kwargs):
+        emprunt = get_object_or_404(Emprunt, id=id)
+        return render(request, self.template_name, {'emprunt': emprunt})
+
+    def post(self, request, id, *args, **kwargs):
+        emprunt = get_object_or_404(Emprunt, id=id)
+        emprunt.delete()
+        return redirect(reverse_lazy('emprunts'))

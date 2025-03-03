@@ -1,0 +1,13 @@
+{% extends "bibliothecaires/base.html" %}
+{% block title %}Retour d'un emprunt{% endblock %}
+{% block content %}
+    <main class="h-75 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h2 class="mb-3">Retour du média</h2>
+        <p>Voulez-vous vraiment enregistrer le retour du média {{ emprunt.media.titre }} ?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-dark">Confirmer le retour</button>
+            <a href="{% url 'medias_bibliothecaires' %}" class="btn btn-dark">Annuler</a>
+        </form>
+    </main>
+{% endblock %}

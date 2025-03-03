@@ -3,8 +3,9 @@ from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.db.models import Q
+from django.utils.timezone import now
 from mediatheque.forms import ConnexionForm
-from bibliothecaires.models import Livre, DVD, CD, JeuDePlateau
+from bibliothecaires.models import Livre, DVD, CD, JeuDePlateau, Membre, Emprunt
 
 
 class ConnexionView(LoginView):
@@ -78,4 +79,22 @@ class MediasViews(TemplateView):
             medias = list(livres) + list(dvds) + list(cds) + list(jeux)
 
         context['medias'] = medias
+        return context
+
+
+class EmpruntsMembreView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = "membres/emprunts.html"
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='membres').exists()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        membre = Membre.objects.get(user=self.request.user)
+        emprunts = Emprunt.objects.filter(emprunteur=membre)
+        en_retard = any(emprunt.date_retour < now().date() for emprunt in emprunts)
+
+        context['emprunts'] = emprunts
+        context['en_retard'] = en_retard
+        context['aujourdhui'] = now().date()
         return context

@@ -1,0 +1,71 @@
+{% extends "membres/base.html" %}
+{% block title %}Mes emprunts{% endblock %}
+{% block content %}
+    <main class="h-75 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h1 class="mb-5">Mes emprunts :</h1>
+
+        {% if emprunts %}
+            {% if emprunts|length == 1 %}
+                <p>
+                    Vous avez actuellement un emprunt actif. <br/>
+                    {% if en_retard %}
+                        Vous avez dépassé la date de retour pour cet emprunt. Pour emprunter à nouveau, veuillez retourner le média.
+                    {% else %}
+                        Vous pouvez emprunter deux médias supplémentaires.
+                    {% endif %}
+                </p>
+
+            {% elif emprunts|length == 2 %}
+                <p>
+                    Vous avez actuellement deux emprunts actifs. <br/>
+                    {% if en_retard %}
+                        Vous avez dépassé la date de retour pour au moins un emprunt. Pour emprunter à nouveau, veuillez retourner le(s) média(s) en retard.
+                    {% else %}
+                        Vous pouvez emprunter un média supplémentaire.
+                    {% endif %}
+                </p>
+
+            {% elif emprunts|length == 3 %}
+                <p>
+                    Vous avez atteint la limite maximale de trois emprunts actifs. Pour emprunter à nouveau, veuillez retourner au moins un média. <br/>
+                    {% if en_retard %}
+                        De plus, vous avez dépassé la date de retour pour au moins un emprunt. Veuillez retourner le(s) média(s) en retard.
+                    {% endif %}
+                </p>
+            {% endif %}
+
+            <table class="table table-striped mt-4 w-75">
+                <thead>
+                    <tr>
+                        <th>Média</th>
+                        <th>Date d'emprunt</th>
+                        <th>Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emprunt in emprunts %}
+                    <tr>
+                        <td>
+                            {% if emprunt.media.titre %}
+                                {{ emprunt.media.titre }}
+                            {% elif emprunt.media.nom %}
+                                {{ emprunt.media.nom }}
+                            {% endif %}
+                        </td>
+                        <td>{{ emprunt.date_emprunt }}</td>
+                        <td>
+                            {% if emprunt.date_retour < aujourdhui %}
+                                En retard. Ce média devait être rendu le {{ emprunt.date_retour }}. Veuillez le rendre rapidement.
+                            {% else %}
+                                Vous pouvez garder ce média jusqu'au {{ emprunt.date_retour }}.
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Vous n'avez pas d'emprunt actif actuellement. Vous pouvez emprunter jusqu'à trois médias.</p>
+        {% endif %}
+    </main>
+{% endblock %}

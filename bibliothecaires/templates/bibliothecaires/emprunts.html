@@ -1,0 +1,54 @@
+{% extends "bibliothecaires/base.html" %}
+{% block title %}Emprunts{% endblock %}
+{% block content %}
+    <main class="min-vh-100 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h1 class="mb-3">Emprunts</h1>
+
+        <div class="d-flex justify-content-between mb-3">
+            <form method="get">
+                <label for="retard">Filtrer par retard :</label>
+                <select name="retard" id="retard">
+                    <option value="">Tous</option>
+                    <option value="en_retard">En retard</option>
+                </select>
+
+                <label for="q" class="ms-5">Rechercher :</label>
+                <input type="text" name="q" id="q" value="{{ request.GET.q }}" placeholder="Média ou emprunteur">
+                <button type="submit" class="ms-3 btn btn-dark">Filtrer</button>
+            </form>
+        </div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Média</th>
+                    <th>Emprunté par</th>
+                    <th>Date d'emprunt</th>
+                    <th>Statut</th>
+                    <th>Retour du média</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emprunt in emprunts %}
+                <tr>
+                    <td>{{ emprunt.media.titre }}</td>
+                    <td>{{ emprunt.emprunteur.nom }}</td>
+                    <td>{{ emprunt.date_emprunt }}</td>
+                    <td>
+                        {% if emprunt.date_retour < aujourdhui %}
+                            En retard. Le retour était prévu le {{ emprunt.date_retour }}.
+                        {% else %}
+                            À rendre avant le {{ emprunt.date_retour }}.
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'retour_emprunt' emprunt.id %}" class="btn btn-dark btn-sm">Retour</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'ajout_emprunt' %}" class="btn btn-dark mt-3 mb-3">Ajouter un emprunt</a>
+    </main>
+{% endblock %}
