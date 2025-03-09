@@ -7,7 +7,7 @@
         <form method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-dark">Confirmer le retour</button>
-            <a href="{% url 'medias_bibliothecaires' %}" class="btn btn-dark">Annuler</a>
+            <a href="{% url 'emprunts' %}" class="btn btn-dark">Annuler</a>
         </form>
     </main>
 {% endblock %}

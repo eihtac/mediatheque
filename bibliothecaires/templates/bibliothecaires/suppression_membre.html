@@ -1,0 +1,13 @@
+{% extends "bibliothecaires/base.html" %}
+{% block title %}Supprimer un membre {% endblock %}
+{% block content %}
+    <main class="h-75 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h1 class="mb-3">Supprimer un membre</h1>
+        <p>Voulez-vous vraiment supprimer le membre {{ membre.nom }} ?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-dark">Confirmer</button>
+            <a href="{% url 'membres' %}" class="btn btn-dark">Annuler</a>
+        </form>
+    </main>
+{% endblock %}
