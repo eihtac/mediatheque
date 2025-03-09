@@ -46,7 +46,7 @@ class Membre(models.Model):
     nom = models.CharField(max_length=150)
     emprunts_actifs = models.IntegerField(default=0)
     en_retard = models.BooleanField(default=False)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         retard = "En retard." if self.en_retard else ""
@@ -113,3 +113,8 @@ def creer_utilisateur_membre(sender, instance, created, **kwargs):
         Membre.objects.filter(pk=instance.pk).update(user=user)
         membres_group = Group.objects.get(name="membres")
         user.groups.add(membres_group)
+
+@receiver(models.signals.post_delete, sender=Membre)
+def supprimer_utilisateur_membre(sender, instance, **kwargs):
+    if instance.user:
+        instance.user.delete()

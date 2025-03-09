@@ -14,6 +14,7 @@
 
                 <label for="q" class="ms-5">Rechercher :</label>
                 <input type="text" name="q" id="q" value="{{ request.GET.q }}" placeholder="Média ou emprunteur">
+
                 <button type="submit" class="ms-3 btn btn-dark">Filtrer</button>
             </form>
         </div>
@@ -28,6 +29,7 @@
                     <th>Retour du média</th>
                 </tr>
             </thead>
+
             <tbody>
                 {% for emprunt in emprunts %}
                 <tr>

@@ -286,3 +286,87 @@ class RetourEmpruntView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         emprunt = get_object_or_404(Emprunt, id=id)
         emprunt.delete()
         return redirect(reverse_lazy('emprunts'))
+
+
+class MembresView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'bibliothecaires/membres.html'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='bibliothecaires').exists()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        membres = Membre.objects.all()
+
+        filtre = self.request.GET.get('filtre')
+        recherche = self.request.GET.get('q', '').strip().lower()
+
+        if filtre == 'en_retard':
+            membres = membres.filter(en_retard=True)
+
+        if recherche:
+            membres = membres.filter(Q(nom__icontains=recherche))
+
+        context['membres'] = membres
+        return context
+
+
+class AjoutMembreView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'bibliothecaires/ajout_membre.html'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='bibliothecaires').exists()
+
+    def post(self, request, *args, **kwargs):
+        nom = request.POST.get('nom')
+
+        if nom:
+            Membre.objects.create(nom=nom)
+            return redirect(reverse_lazy('membres'))
+
+        return render(request, self.template_name, {'error': 'Le nom est requis.'})
+
+
+class ModificationMembreView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'bibliothecaires/modification_membre.html'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='bibliothecaires').exists()
+
+    def get(self, request, id, *args, **kwargs):
+        membre = get_object_or_404(Membre, id=id)
+        return render(request, self.template_name, {'membre':membre})
+
+    def post(self, request, id, *args, **kwargs):
+        membre = get_object_or_404(Membre, id=id)
+        nom = request.POST.get('nom')
+
+        if nom:
+            membre.nom = nom
+            membre.save()
+            return redirect(reverse_lazy('membres'))
+
+        return render(request, self.template_name, {'membre': membre, 'error':'Le nom est requis.'})
+
+
+class SuppressionMembreView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'bibliothecaires/suppression_membre.html'
+
+    def test_func(self):
+        return self.request.user.groups.filter(name='bibliothecaires').exists()
+
+    def get(self, request, id, *args, **kwargs):
+        membre = get_object_or_404(Membre, id=id)
+        return render(request, self.template_name, {'membre': membre})
+
+    def post(self, request, id, *args, **kwargs):
+        membre = get_object_or_404(Membre, id=id)
+
+        if Emprunt.objects.filter(emprunteur=membre).exists():
+            return render(request, self.template_name, {
+                'membre': membre,
+                'error': 'Vous ne pouvez pas supprimer un membre qui a des emprunts actifs.'
+            })
+
+        membre.delete()
+        return redirect(reverse_lazy('membres'))

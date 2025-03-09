@@ -13,5 +13,9 @@ urlpatterns = [
     path('medias/suppression/<str:type>/<int:id>/', views.SuppressionMediaView.as_view(), name='suppression_media'),
     path('emprunts/', views.EmpruntsView.as_view(), name='emprunts'),
     path('emprunts/ajout/', views.AjoutEmpruntView.as_view(), name='ajout_emprunt'),
-    path('emprunts/retour/<int:id>/', views.RetourEmpruntView.as_view(), name='retour_emprunt')
+    path('emprunts/retour/<int:id>/', views.RetourEmpruntView.as_view(), name='retour_emprunt'),
+    path('membres/', views.MembresView.as_view(), name='membres'),
+    path('membres/ajout/', views.AjoutMembreView.as_view(), name='ajout_membre'),
+    path('membres/modification/<int:id>/', views.ModificationMembreView.as_view(), name='modification_membre'),
+    path('membres/suppression/<int:id>/', views.SuppressionMembreView.as_view(), name='suppression_membre')
 ]

@@ -1,0 +1,14 @@
+{% extends "bibliothecaires/base.html" %}
+{% block title %}Modifier un membre{% endblock %}
+{% block content %}
+    <main class="h-75 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h1 class="mb-3">Modifier un membre</h1>
+        <form method="post" class="d-flex flex-column">
+            {% csrf_token %}
+            <label for="nom">Nom du membre :</label>
+            <input type="text" name="nom" id="nom" value="{{ membre.nom }}" required>
+            <button type="submit" class="btn btn-dark mt-3">Modifier</button>
+        </form>
+        <a href="{% url 'membres' %}" class="btn btn-dark mt-3 px-5">Annuler</a>
+    </main>
+{% endblock %}

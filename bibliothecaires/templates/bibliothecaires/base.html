@@ -11,7 +11,7 @@
             <ul class="d-flex justify-content-around py-4">
                 <li><a href="{% url 'accueil_bibliothecaires' %}" class="text-decoration-none text-light">Accueil</a></li>
                 <li><a href="{% url 'medias_bibliothecaires' %}" class="text-decoration-none text-light">Medias</a></li>
-                <li><a href=# class="text-decoration-none text-light">Membres</a></li>
+                <li><a href="{% url 'membres' %}" class="text-decoration-none text-light">Membres</a></li>
                 <li><a href="{% url 'emprunts' %}" class="text-decoration-none text-light">Emprunts</a></li>
                 <li>
                     <form action="{% url 'deconnexion' %}" method="post" class="d-inline">

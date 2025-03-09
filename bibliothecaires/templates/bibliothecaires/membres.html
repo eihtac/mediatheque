@@ -1,0 +1,59 @@
+{% extends 'bibliothecaires/base.html' %}
+{% block title %}Membres{% endblock %}
+{% block content %}
+    <main class="min-vh-100 d-flex flex-column align-items-center justify-content-center mx-5">
+        <h1 class="mt-3">Membres</h1>
+
+        <div class="d-flex justify-content-between w-100">
+            <form method="get">
+                <label for="filtre">Filtrer :</label>
+                <select name="filtre" id="filtre">
+                    <option value="">Tous</option>
+                    <option value="en_retard">En retard</option>
+                </select>
+                <button type="submit" class="ms-3 btn btn-dark">Filtrer</button>
+            </form>
+
+            <form method="get">
+                <label for="q">Rechercher :</label>
+                <input type="text" name="q" id="q" value="{{ request.GET.q }}" placeholder="Nom du membre">
+                <button type="submit" class="ms-3 btn btn-dark">Rechercher</button>
+            </form>
+        </div>
+
+        <table class="table table-striped mt-4">
+            <thead>
+                <tr>
+                    <th>Nom</th>
+                    <th>Emprunts actifs</th>
+                    <th>Statut</th>
+                    <th>Modifications</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for membre in membres %}
+                <tr>
+                    <td>{{ membre.nom }}</td>
+                    <td>{{ membre.emprunts_actifs }}</td>
+                    <td>
+                        {% if membre.en_retard %}
+                            En retard
+                        {% elif membre.emprunts_actifs == 3 %}
+                            Limite d'emprunts atteinte
+                        {% else %}
+                            Peut emprunter
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'modification_membre' membre.id %}" class="btn btn-dark btn-sm">Modifier</a>
+                        <a href="{% url 'suppression_membre' membre.id %}" class="btn btn-dark btn-sm ms-2">Supprimer</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <a href="{% url 'ajout_membre' %}" class="btn btn-dark mt-2 mb-5">Ajouter un membre</a>
+    </main>
+{% endblock %}
