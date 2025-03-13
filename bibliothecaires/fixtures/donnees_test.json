@@ -1,0 +1,466 @@
+[
+{
+    "model": "auth.group",
+    "pk": 1,
+    "fields": {
+        "name": "membres",
+        "permissions": [
+            [
+                "view_cd",
+                "bibliothecaires",
+                "cd"
+            ],
+            [
+                "view_dvd",
+                "bibliothecaires",
+                "dvd"
+            ],
+            [
+                "view_emprunt",
+                "bibliothecaires",
+                "emprunt"
+            ],
+            [
+                "view_jeudeplateau",
+                "bibliothecaires",
+                "jeudeplateau"
+            ],
+            [
+                "view_livre",
+                "bibliothecaires",
+                "livre"
+            ],
+            [
+                "view_media",
+                "bibliothecaires",
+                "media"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.group",
+    "pk": 2,
+    "fields": {
+        "name": "bibliothecaires",
+        "permissions": [
+            [
+                "add_cd",
+                "bibliothecaires",
+                "cd"
+            ],
+            [
+                "change_cd",
+                "bibliothecaires",
+                "cd"
+            ],
+            [
+                "delete_cd",
+                "bibliothecaires",
+                "cd"
+            ],
+            [
+                "view_cd",
+                "bibliothecaires",
+                "cd"
+            ],
+            [
+                "add_dvd",
+                "bibliothecaires",
+                "dvd"
+            ],
+            [
+                "change_dvd",
+                "bibliothecaires",
+                "dvd"
+            ],
+            [
+                "delete_dvd",
+                "bibliothecaires",
+                "dvd"
+            ],
+            [
+                "view_dvd",
+                "bibliothecaires",
+                "dvd"
+            ],
+            [
+                "add_emprunt",
+                "bibliothecaires",
+                "emprunt"
+            ],
+            [
+                "change_emprunt",
+                "bibliothecaires",
+                "emprunt"
+            ],
+            [
+                "delete_emprunt",
+                "bibliothecaires",
+                "emprunt"
+            ],
+            [
+                "view_emprunt",
+                "bibliothecaires",
+                "emprunt"
+            ],
+            [
+                "add_jeudeplateau",
+                "bibliothecaires",
+                "jeudeplateau"
+            ],
+            [
+                "change_jeudeplateau",
+                "bibliothecaires",
+                "jeudeplateau"
+            ],
+            [
+                "delete_jeudeplateau",
+                "bibliothecaires",
+                "jeudeplateau"
+            ],
+            [
+                "view_jeudeplateau",
+                "bibliothecaires",
+                "jeudeplateau"
+            ],
+            [
+                "add_livre",
+                "bibliothecaires",
+                "livre"
+            ],
+            [
+                "change_livre",
+                "bibliothecaires",
+                "livre"
+            ],
+            [
+                "delete_livre",
+                "bibliothecaires",
+                "livre"
+            ],
+            [
+                "view_livre",
+                "bibliothecaires",
+                "livre"
+            ],
+            [
+                "add_media",
+                "bibliothecaires",
+                "media"
+            ],
+            [
+                "change_media",
+                "bibliothecaires",
+                "media"
+            ],
+            [
+                "delete_media",
+                "bibliothecaires",
+                "media"
+            ],
+            [
+                "view_media",
+                "bibliothecaires",
+                "media"
+            ],
+            [
+                "add_membre",
+                "bibliothecaires",
+                "membre"
+            ],
+            [
+                "change_membre",
+                "bibliothecaires",
+                "membre"
+            ],
+            [
+                "delete_membre",
+                "bibliothecaires",
+                "membre"
+            ],
+            [
+                "view_membre",
+                "bibliothecaires",
+                "membre"
+            ]
+        ]
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$fEwffSCje2m9LIiGjzRlFQ$YQPmxRr+KcFVSmf2QDxk4O6OHpckpw8xrb/2wxbe1Qo=",
+        "last_login": "2025-03-03T19:26:02.386Z",
+        "is_superuser": false,
+        "username": "John Doe",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-02-11T11:53:24.609Z",
+        "groups": [
+            [
+                "membres"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$xTaxwtY5nkPGixyBDtqtFZ$APwZyqzPc/T9I3ktq+yXTqVFwb/PbUDknpUrKtL7ZLc=",
+        "last_login": "2025-03-03T19:38:42.843Z",
+        "is_superuser": false,
+        "username": "Jane Doe",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-02-11T12:06:46.563Z",
+        "groups": [
+            [
+                "membres"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$9xU3C0pNELWzMAEFlKD8Hi$DiPk2yCk3yRZISPVhtL5jSgmaluGqhVlBFGc34vIFOE=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "Jean test",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-03-09T19:01:03.292Z",
+        "groups": [
+            [
+                "membres"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "auth.user",
+    "pk": 4,
+    "fields": {
+        "password": "pbkdf2_sha256$870000$0RPFZoIySTN3xGIZnN1xe1$vrVh2+MEYEZq6U7LxCjZVYqGZCaKpGgbEH8apLZUn5A=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "bibliothecaire",
+        "first_name": "",
+        "last_name": "",
+        "email": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2025-03-11T16:17:37Z",
+        "groups": [
+            [
+                "bibliothecaires"
+            ]
+        ],
+        "user_permissions": []
+    }
+},
+{
+    "model": "bibliothecaires.membre",
+    "pk": 1,
+    "fields": {
+        "nom": "John Doe",
+        "emprunts_actifs": 1,
+        "en_retard": true,
+        "user": [
+            "John Doe"
+        ]
+    }
+},
+{
+    "model": "bibliothecaires.membre",
+    "pk": 2,
+    "fields": {
+        "nom": "Jane Doe",
+        "emprunts_actifs": 3,
+        "en_retard": false,
+        "user": [
+            "Jane Doe"
+        ]
+    }
+},
+{
+    "model": "bibliothecaires.membre",
+    "pk": 3,
+    "fields": {
+        "nom": "Jean Test",
+        "emprunts_actifs": 0,
+        "en_retard": false,
+        "user": [
+            "Jean test"
+        ]
+    }
+},
+{
+    "model": "bibliothecaires.media",
+    "pk": 1,
+    "fields": {
+        "titre": "Voyage au bout de la nuit",
+        "disponible": false
+    }
+},
+{
+    "model": "bibliothecaires.media",
+    "pk": 2,
+    "fields": {
+        "titre": "L'Etranger",
+        "disponible": false
+    }
+},
+{
+    "model": "bibliothecaires.media",
+    "pk": 3,
+    "fields": {
+        "titre": "Inception ",
+        "disponible": false
+    }
+},
+{
+    "model": "bibliothecaires.media",
+    "pk": 4,
+    "fields": {
+        "titre": "Le Parrain ",
+        "disponible": true
+    }
+},
+{
+    "model": "bibliothecaires.media",
+    "pk": 5,
+    "fields": {
+        "titre": "Nevermind",
+        "disponible": true
+    }
+},
+{
+    "model": "bibliothecaires.media",
+    "pk": 6,
+    "fields": {
+        "titre": "The Dark Side of the Moon",
+        "disponible": false
+    }
+},
+{
+    "model": "bibliothecaires.livre",
+    "pk": 1,
+    "fields": {
+        "media_ptr": 1,
+        "auteur": "Louis-Ferdinand Celine"
+    }
+},
+{
+    "model": "bibliothecaires.livre",
+    "pk": 2,
+    "fields": {
+        "media_ptr": 2,
+        "auteur": "Albert Camus"
+    }
+},
+{
+    "model": "bibliothecaires.dvd",
+    "pk": 1,
+    "fields": {
+        "media_ptr": 3,
+        "realisateur": "Christopher Nolan"
+    }
+},
+{
+    "model": "bibliothecaires.dvd",
+    "pk": 2,
+    "fields": {
+        "media_ptr": 4,
+        "realisateur": "Francis Ford Coppola"
+    }
+},
+{
+    "model": "bibliothecaires.cd",
+    "pk": 1,
+    "fields": {
+        "media_ptr": 5,
+        "artiste": "Nirvana"
+    }
+},
+{
+    "model": "bibliothecaires.cd",
+    "pk": 2,
+    "fields": {
+        "media_ptr": 6,
+        "artiste": "Pink Floyd"
+    }
+},
+{
+    "model": "bibliothecaires.jeudeplateau",
+    "pk": 1,
+    "fields": {
+        "nom": "Kingdomino",
+        "createur": "Bruno Cathala"
+    }
+},
+{
+    "model": "bibliothecaires.jeudeplateau",
+    "pk": 2,
+    "fields": {
+        "nom": "Carcassonne",
+        "createur": "Klaus-Jurgen Wrede"
+    }
+},
+{
+    "model": "bibliothecaires.emprunt",
+    "pk": 1,
+    "fields": {
+        "emprunteur": 1,
+        "media": 1,
+        "date_emprunt": "2025-03-11",
+        "date_retour": "2025-03-01"
+    }
+},
+{
+    "model": "bibliothecaires.emprunt",
+    "pk": 2,
+    "fields": {
+        "emprunteur": 2,
+        "media": 3,
+        "date_emprunt": "2025-03-11",
+        "date_retour": "2025-03-18"
+    }
+},
+{
+    "model": "bibliothecaires.emprunt",
+    "pk": 3,
+    "fields": {
+        "emprunteur": 2,
+        "media": 6,
+        "date_emprunt": "2025-03-11",
+        "date_retour": "2025-03-18"
+    }
+},
+{
+    "model": "bibliothecaires.emprunt",
+    "pk": 4,
+    "fields": {
+        "emprunteur": 2,
+        "media": 2,
+        "date_emprunt": "2025-03-11",
+        "date_retour": "2025-03-18"
+    }
+}
+]
