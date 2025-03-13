@@ -4,6 +4,10 @@ from datetime import timedelta
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.contrib.auth.models import User, Group
+import logging
+
+logger = logging.getLogger('app')
+
 
 class Media(models.Model):
     titre = models.CharField(max_length=250)
@@ -11,6 +15,15 @@ class Media(models.Model):
 
     def __str__(self):
         return f"{self.titre} | {'Disponible' if self.disponible else 'Ce média est déjà emprunté actuellement.'}"
+
+    def save(self, *args, **kwargs):
+        action = 'cree' if not self.pk else 'modifie'
+        super().save(*args, **kwargs)
+        logger.info(f"Media '{self.titre}' a ete {action}.")
+
+    def delete(self, *args, **kwargs):
+        logger.info(f"Media '{self.titre}' a ete supprime.")
+        super().delete(*args, **kwargs)
 
 
 class Livre(Media):
@@ -62,6 +75,15 @@ class Membre(models.Model):
     def peut_emprunter(self):
         return not self.en_retard and self.emprunts_actifs < 3
 
+    def save(self, *args, **kwargs):
+        action = "cree" if not self.pk else "modifie"
+        super().save(*args, **kwargs)
+        logger.info(f"Membre '{self.nom}' a ete {action}.")
+
+    def delete(self, *args, **kwargs):
+        logger.info(f"Membre '{self.nom}' a ete supprime.")
+        super().delete(*args, **kwargs)
+
 
 class Emprunt(models.Model):
     emprunteur = models.ForeignKey('Membre', on_delete=models.CASCADE)
@@ -98,7 +120,11 @@ class Emprunt(models.Model):
         self.emprunteur.save()
         self.media.save()
 
+        action = "cree" if not self.pk else "modifie"
+        logger.info(f"Emprunt {action} : '{self.media.titre}' par '{self.emprunteur.nom}'.")
+
     def delete(self, *args, **kwargs):
+        logger.info(f"Emprunt supprime : '{self.media.titre}' par '{self.emprunteur.nom}'.")
         super().delete(*args, **kwargs)
         self.emprunteur.emprunts_actifs -= 1
         self.media.disponible = True
